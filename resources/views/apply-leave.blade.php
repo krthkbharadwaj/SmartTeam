@@ -4,6 +4,7 @@ $ipaddress = $_SERVER['REMOTE_ADDR'];
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<meta name="csrf-token" content="<?php echo csrf_token() ?>">
 	<title>Attendance</title>
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
@@ -129,12 +130,9 @@ width: 236px;
 <a href="index.php"><img src="img/logo.png" alt="Smiley face" height="200" width="200"></a>
 </div>
 
-<?php
+ <form role="form" action="apply-leave-submit" method="POST" id="login-form"class="col-lg-5 col-md-5 col-lg-offset-3 col-md-offset-3" style="margin-top:-3%">
+ {{ csrf_field() }} 
 
-{!! Form::open(array('route' => 'store', 'class' => 'form')) !!}
-
-?>
- <form role="form" action="#" method="POST" id="login-form"class="col-lg-5 col-md-5 col-lg-offset-3 col-md-offset-3" style="margin-top:-3%">
       <label for="pwd">Take Pic:</label>     
 	<table class="main">
         <tr>
@@ -170,44 +168,6 @@ width: 236px;
     </div> -->
 
 
-{!! Form::open(['url'=>'register','id'=>'sign-up','class'=>'col-md-6 col-md-push-4 form-horizontal'])!!}
-        
-            <div class='form-group'>
-                {!! Form::label('first_name', 'First Name:',['class'=>'col-xs-12 col-md-3']) !!}
-                <div class= 'col-xs-12 col-md-6'>
-                    {!! Form::text('first_name', null, ['class' => 'form-control'])!!}
-                </div>
-            </div>
-            <div class='form-group'>
-                {!! Form::label('last_name', 'Last Name:',['class'=>'col-xs-12 col-md-3']) !!}
-                <div class= 'col-xs-12 col-md-6'>
-                    {!! Form::text('last_name', null, ['class' => 'form-control'])!!}
-                </div>
-            </div>
-            <div class='form-group'>
-                {!! Form::label('email', 'Email Address:',['class'=>'col-xs-12 col-md-3']) !!}
-                <div class= 'col-xs-12 col-md-6 '>
-                    {!! Form::text('email', null, ['class' => 'form-control'])!!}
-    <div class='form-group'>
-            {!! Form::label('password', 'Password:',['class'=>'col-xs-12 col-md-3']) !!}
-                <div class= 'col-xs-12 col-md-6'>
-                    {!! Form::password('password', null, ['class' => 'form-control'])!!}
-                </div>
-            </div>
-    
-                    <div class='form-group'>
-            {!! Form::label('password_confirmation', 'Confirm Password:',['class'=>'col-xs-12 col-md-3']) !!}
-                <div class= 'col-xs-12 col-md-6'>
-                    {!! Form::password('password_confirmation', null, ['class' => 'form-control'])!!}
-                </div>
-            </div>
-                    </div>  <div class='btn btn-small'>
-                {!! Form::submit('Join Us!',['class'=>'btn btn-success btn-sm form-control'])!!}
-            </div>
-                    
-        {!! Form::close() !!}
-
-
     <div class="form-group">
       <label for="email">Emp ID:</label>
       <input type="text" class="form-control" id="empId" name="empId" placeholder="Enter Employee ID">
@@ -237,21 +197,23 @@ width: 236px;
    </div>
   </form>
 
-<?php	
-{!! Form::close() !!}
-?>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script type="text/javascript">
       $(document).ready(function () {
         $("#datetimepicker1").datepicker({
-            dateFormat: "dd-M-yy",
-            autoclose: true	
+            dateFormat: "dd-mm-yy",
+            autoclose: true,
+            altFormat: 'dd-mm-yy',	
         });
         $('#datetimepicker2').datepicker({
-            dateFormat: "dd-M-yy",
-	    autoclose: true	
+            dateFormat: "dd-mm-yy",
+	        autoclose: true,
+            altFormat: 'dd-mm-yy'  
         });
       });
+      $('#formatdate').change(function(){
+    $('#datpicker').datepicker("option","dateFormat","yy-mm-dd");
+});
     </script>
 <script src="{{ URL::asset('js/jquery.validate.min.js') }}"></script>
 <script>
