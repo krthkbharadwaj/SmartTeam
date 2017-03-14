@@ -25,3 +25,4 @@ Route::get('/apply-leave', function () {
     return view('apply-leave');
 });
 
+Route::post('/apply-leave-submit', 'ApplyLeaveController@apply_leave');

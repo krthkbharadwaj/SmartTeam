@@ -9,7 +9,7 @@
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <!-- Styles -->
         <style>
             html, body {
@@ -62,9 +62,15 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+            .alert-success {
+            	/*color: #004c00;*/
+            	font-weight: bold;
+            }
+
         </style>
     </head>
     <body>
+
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
                 <div class="top-right links">
@@ -78,6 +84,16 @@
             @endif
 
             <div class="content">
+
+            <div class="flash-message">
+    @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+      @if(Session::has('alert-' . $msg))
+
+      <p class="alert alert-{{ $msg }}" style="text-align: center;">{{ Session::get('alert-' . $msg) }} </p>
+      @endif
+    @endforeach
+  </div>
+
                 <div class="title m-b-md company-logo">
                   <img src="{{URL::asset('/img/logo.png')}}" alt="profile Pic" height="300" width="300">
                 </div>
@@ -94,3 +110,8 @@
         </div>
     </body>
 </html>
+<script>
+    $( "#close" ).click(function(){
+    	$this.parent().remove();
+    });
+</script>
