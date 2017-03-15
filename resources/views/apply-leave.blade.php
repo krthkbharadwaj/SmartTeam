@@ -47,7 +47,9 @@ $ipaddress = $_SERVER['REMOTE_ADDR'];
     <script language="JavaScript">
 function take_snapshot() {
     Webcam.snap(function(data_uri) {
+        console.log(data_uri);
     document.getElementById('results').innerHTML = '<img id="base64image" src="'+data_uri+'"/><button onclick="SaveSnap();">Save Snap</button>';
+    document.getElementById('upload_image_url').value = data_uri;
 });
 }
 function ShowCam(){
@@ -143,6 +145,7 @@ width: 236px;
                 <input type="button" class="btn btn-primary btn-xs" value="Take Picture" onClick="take_snapshot()">
 				 <input type="hidden" id="upload_image_url" name="imageUrl" value="">
 				 <input type="hidden" id="ip_address" name="IpAddress" value="<?php echo $ipaddress ?>">
+
 				
             </td>
             <td width="10">&nbsp;</td>
