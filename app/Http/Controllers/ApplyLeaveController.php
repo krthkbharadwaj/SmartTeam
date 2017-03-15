@@ -19,21 +19,39 @@ class ApplyLeaveController extends Controller
 		return View::make('apply-leave');
 	}
   public function apply_leave(Request $user_details){
-		//print_r($user_details->all()); //get all the form attributes with values
 		$uid=0;
+		//print_r($_POST['img']);exit;
   	if (Auth::check()) {
   		$uid = Auth::user()->id;
   	}
-		 DB::table('leaves')->insert(
+
+  	$data = $_POST['imageUrl'];
+$tm = time();
+$source = fopen($data, 'r');
+$destination = fopen('leaves/'.$tm.'.jpg', 'w');
+
+stream_copy_to_stream($source, $destination);
+
+fclose($source);
+fclose($destination);
+	$fid = DB::table('files')->insertGetId(
+     array(
+           'file_name' => $tm,
+           'file_path' => 'leaves',
+           'file_ext' => 'jpg'
+     )
+	);
+	
+	DB::table('leaves')->insert(
      array(
            'emp_id' => $_POST['empId'],
            'from_date' => date("Y-m-d", strtotime($_POST['from_date'])),
            'to_date' =>  date("Y-m-d", strtotime($_POST['to_date'])),
            'ip_address' => $_POST['IpAddress'],
            'uid' => $uid,
-           'img_id' => 0
+           'img_id' => $fid
      )
-		); 
+	); 
 		 $user_details->session()->flash('alert-success', 'Leave was successfully added!');
 		 //Session::flash('success', 'Leave was successful added!');
 		 return redirect('/');
