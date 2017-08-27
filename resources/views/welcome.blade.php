@@ -1,15 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="{{ app()->getLocale() }}">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Ellipsonic</title>
+        <title>Smart Team</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
         <!-- Styles -->
         <style>
             html, body {
@@ -62,56 +62,42 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
-            .alert-success {
-            	/*color: #004c00;*/
-            	font-weight: bold;
-            }
-
         </style>
     </head>
     <body>
-
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
                 <div class="top-right links">
                     @if (Auth::check())
-                        <a href="{{ url('/logout') }}">Logout</a>  
+                        <a href="{{ url('/home') }}">Home</a>
                     @else
-                       <!-- <a href="{{ url('/login') }}">Login</a> -->
+                        <a href="{{ url('/login') }}">Login</a>
                         <a href="{{ url('/register') }}">Register</a>
                     @endif
                 </div>
             @endif
 
-            <div class="content">
-
             <div class="flash-message">
-    @foreach (['danger', 'warning', 'success', 'info'] as $msg)
-      @if(Session::has('alert-' . $msg))
+              @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+              @if(Session::has('alert-' . $msg))
+                <p class="alert alert-{{ $msg }}" style="text-align: center;">{{ Session::get('alert-' . $msg) }} </p>
+              @endif
+              @endforeach
+            </div>
 
-      <p class="alert alert-{{ $msg }}" style="text-align: center;">{{ Session::get('alert-' . $msg) }} </p>
-      @endif
-    @endforeach
-  </div>
-
-                <div class="title m-b-md company-logo">
-                  <img src="{{URL::asset('/img/logo.png')}}" alt="profile Pic" height="300" width="300">
+            <div class="content">
+                <div class="title m-b-md">
+                    Smart Team
                 </div>
 
                 <div class="links">
-                  @if (!Auth::check())
-                    <a href="{{ url('/login') }}">Login</a>
-                  @endif
-                    <a href="{{ url('/apply-leave') }}">Apply Leave</a>
-                    <a href="#">Leave status</a>
-                    <a href="#">Available leave</a>
+                    <a href="#">Task Management</a>
+                    <a href="leave">Leave Management</a>
+                    <a href="#">Analytics</a>
+                    <a href="#">News</a>
+                    <a href="#">About us</a>
                 </div>
             </div>
         </div>
     </body>
 </html>
-<script>
-    $( "#close" ).click(function(){
-    	$this.parent().remove();
-    });
-</script>

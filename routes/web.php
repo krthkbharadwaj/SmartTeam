@@ -17,12 +17,14 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
+Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/apply-leave', 'ApplyLeaveController@index');
+Auth::routes();
 
-Route::get('/apply-leave', function () {
-    return view('apply-leave');
-});
+Route::get('/home', 'HomeController@index')->name('home');
 
-Route::post('/apply-leave-submit', 'ApplyLeaveController@apply_leave');
+Route::get('/leave', 'LeaveController@index');
+
+Route::get('/task', 'TaskController@index');
+
+Route::post('/leave', 'LeaveController@apply_leave');
